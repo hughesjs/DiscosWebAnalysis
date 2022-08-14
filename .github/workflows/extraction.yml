@@ -1,4 +1,4 @@
-name: Download the latest data from DISCOSweb
+name: Download the Latest Data from DISCOSweb
 on:
   schedule:
     - cron: "0 0 * * *"
@@ -9,15 +9,27 @@ jobs:
     name: Fetch latest data from DISCOSweb
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
       - uses: actions/setup-dotnet@v2
         with:
           dotnet-version: '6.0.x'
-      - name: Get DiscosExtractor Release
-        run: wget https://github.com/hughesjs/DiscosExtractor/releases/download/v0.1/discosextractor && chmod +x ./discosextractor && echo "{\"DiscosApiUrl\":\"https://discosweb.esoc.esa.int/api/\",\"DiscosApiKey\":\"${{secrets.DISCOS_TOKEN}}\"}" >> .discosextractorrc
+      - name: Checkout DiscosExtractor
+        uses: actions/checkout@master
+        with:
+          repository: hughesjs/DiscosExtractor
+          path: ./DiscosExtractor
+      - name: Checkout analysis repo
+        uses: actions/checkout@master
+        with:
+          repository: hughesjs/DiscosWebAnalysis
+          path: ./DiscosWebAnalysis
+      - name: Build DiscosExtractor
+        run: dotnet build -c Release DiscosExtractor/src/DiscosExtractor/DiscosExtractor.csproj
+      - name: Create extractor config file
+        run:  echo "{\"DiscosApiUrl\":\"https://discosweb.esoc.esa.int/api/\",\"DiscosApiKey\":\"${{secrets.DISCOS_TOKEN}}\"}" >> .discosextractorrc
       - name: Fetch Latest Data from DISCOSweb
-        run: ./discosextractor fetch
+        run: ./DiscosExtractor/src/DiscosExtractor/bin/Release/net6.0/discosextractor fetch 
+      - run: ls -lah
       - name: Copy file to raw directory
-        run: mv ./resultsdict.json ./data/raw/discos-$(date +%Y%m%d).json
+        run: mv ./resultsdict.json ./DiscosWebAnalysis/data/raw/discos-$(date +%Y%m%d).json
       - name: Test
         run: ls -la ./data/raw/
