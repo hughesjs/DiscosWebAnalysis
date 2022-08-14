@@ -6,12 +6,12 @@ on:
 
 jobs:
   extract:
-    name: Test Project
+    name: Fetch latest data from DISCOSweb
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
       - name: Get DiscosExtractor Release
-        run: wget https://github.com/hughesjs/DiscosExtractor/releases/download/v0.1/discosextractor && echo "{\"DiscosApiUrl\":\"https://discosweb.esoc.esa.int/api/\",\"DiscosApiKey\":\"${{secrets.DISCOS_TOKEN}}\"}" >> .discosextractorrc
+        run: wget https://github.com/hughesjs/DiscosExtractor/releases/download/v0.1/discosextractor && chmod +x ./discosextractor && echo "{\"DiscosApiUrl\":\"https://discosweb.esoc.esa.int/api/\",\"DiscosApiKey\":\"${{secrets.DISCOS_TOKEN}}\"}" >> .discosextractorrc
       - name: Fetch Latest Data from DISCOSweb
         run: ./discosextractor fetch
       - name: Copy file to raw directory
