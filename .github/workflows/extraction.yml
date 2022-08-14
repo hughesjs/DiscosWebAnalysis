@@ -10,6 +10,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
+      - uses: actions/setup-dotnet@v2
+        with:
+          dotnet-version: '6.0.x'
       - name: Get DiscosExtractor Release
         run: wget https://github.com/hughesjs/DiscosExtractor/releases/download/v0.1/discosextractor && chmod +x ./discosextractor && echo "{\"DiscosApiUrl\":\"https://discosweb.esoc.esa.int/api/\",\"DiscosApiKey\":\"${{secrets.DISCOS_TOKEN}}\"}" >> .discosextractorrc
       - name: Fetch Latest Data from DISCOSweb
