@@ -29,13 +29,15 @@ jobs:
       - name: Fetch Latest Data from DISCOSweb
         run: ./DiscosExtractor/src/DiscosExtractor/bin/Release/net6.0/discosextractor fetch 
       - run: ls -lah
+      - name: Create folder for date
+        run: mkdir ./DiscosWebAnalysis/data/raw/$(date +%Y%m%d)
       - name: Copy file to raw directory
-        run: mv ./resultsdict.json ./DiscosWebAnalysis/data/raw/discos-$(date +%Y%m%d).json
+        run: mv ./discos-*.json ./DiscosWebAnalysis/data/raw/$(date +%Y%m%d)
       - name: Test
         run: ls -la ./DiscosWebAnalysis/data/raw/
       - uses: EndBug/add-and-commit@v9
         with:
-          add: './DiscosWebAnalysis/data/raw/*'
+          add: '.'
           author_name: DiscosExtractorBot
           author_email: discosextractorbot@proton.me
           commit: --signoff
