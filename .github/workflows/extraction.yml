@@ -32,4 +32,4 @@ jobs:
       - name: Copy file to raw directory
         run: mv ./resultsdict.json ./DiscosWebAnalysis/data/raw/discos-$(date +%Y%m%d).json
       - name: Test
-        run: ls -la ./data/raw/
+        run: ls -la ./DiscosWebAnalysis/data/raw/
