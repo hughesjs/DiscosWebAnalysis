@@ -33,3 +33,11 @@ jobs:
         run: mv ./resultsdict.json ./DiscosWebAnalysis/data/raw/discos-$(date +%Y%m%d).json
       - name: Test
         run: ls -la ./DiscosWebAnalysis/data/raw/
+      - uses: EndBug/add-and-commit@v9
+        with:
+          add: './DiscosWebAnalysis/data/raw/*'
+          author_name: DiscosExtractorBot
+          author_email: discosextractorbot@proton.me
+          commit: --signoff
+          cwd: './DiscosWebAnalysis'
+          message: 'Added DISCOS extraction data for $(date +%Y%m%d)'
