@@ -1,15 +1,4 @@
-import json
-import sys
 from matplotlib import pyplot as plt
-
-
-def deserialise_discos_object_dump(file_path):
-    print(file_path)
-    with open(file_path) as f:
-        lines = f.read()
-
-    object_list = json.loads(lines)
-    return object_list
 
 
 def plot_avg_csas_histo(discos_objects):
@@ -22,7 +11,5 @@ def plot_avg_csas_histo(discos_objects):
     plt.show()
 
 
-if __name__ == '__main__':
-    discos_objects = deserialise_discos_object_dump(sys.argv[1])
+def setup_plotter():
     plt.style.use('dark_background')
-    plot_avg_csas_histo(discos_objects)
