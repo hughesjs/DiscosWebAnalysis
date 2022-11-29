@@ -1,15 +1,22 @@
 using System.Reflection;
+using FigureGeneration.Data;
+using FigureGeneration.Options;
 using FigureGeneration.Services;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace DiscosGroove.Main.DependencyInjection;
 
 public static class ServiceCollectionExtensions
 {
-	public static IServiceCollection AddServices(this IServiceCollection services)
+	public static IServiceCollection AddServices(this IServiceCollection services, IConfigurationRoot configurationRoot)
 	{
 		services.RegisterImplementationsOf<IPlotGenerator>(new[] {typeof(Program).Assembly});
-		services.AddTransient<PlotGeneratorService>();
+		services.AddSingleton<PlotGeneratorService>();
+		services.AddSingleton<ArchivedDataRepository>();
+		services.AddTransient<DataFileService>();
+
+		services.Configure<AppSettings>(configurationRoot.GetSection(nameof(AppSettings)));
 		return services;
 	}
 	

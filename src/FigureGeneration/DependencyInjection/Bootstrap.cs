@@ -2,18 +2,20 @@ using DiscosGroove.Main.DependencyInjection;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace FigureGeneration;
+namespace FigureGeneration.DependencyInjection;
 
 public static class Bootstrap
 {
 	public static ServiceProvider Up()
 	{
-		// IConfigurationBuilder builder = new ConfigurationBuilder();
-		//
-		// IConfigurationRoot? config = builder.Build();
+		IConfigurationBuilder builder = new ConfigurationBuilder()
+		   .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
+			.AddEnvironmentVariables();
+		
+		IConfigurationRoot config = builder.Build();
 
 		IServiceCollection services = new ServiceCollection()
-		   .AddServices();
+		   .AddServices(config);
 
 		return services.BuildServiceProvider();
 	}
