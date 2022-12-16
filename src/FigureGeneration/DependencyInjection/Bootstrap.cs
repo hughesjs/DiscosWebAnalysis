@@ -1,4 +1,3 @@
-using DiscosGroove.Main.DependencyInjection;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -10,7 +9,7 @@ public static class Bootstrap
 	{
 		IConfigurationBuilder builder = new ConfigurationBuilder()
 		   .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
-			.AddEnvironmentVariables();
+		   .AddEnvironmentVariables();
 		
 		IConfigurationRoot config = builder.Build();
 

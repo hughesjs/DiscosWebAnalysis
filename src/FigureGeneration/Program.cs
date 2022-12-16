@@ -1,5 +1,4 @@
-﻿using FigureGeneration;
-using FigureGeneration.DependencyInjection;
+﻿using FigureGeneration.DependencyInjection;
 using FigureGeneration.Services;
 using Microsoft.Extensions.DependencyInjection;
 
