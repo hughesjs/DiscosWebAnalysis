@@ -1,5 +1,6 @@
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using PgfPlots.Net.Public.DependencyInjection;
 
 namespace FigureGeneration.DependencyInjection;
 
@@ -14,7 +15,8 @@ public static class Bootstrap
 		IConfigurationRoot config = builder.Build();
 
 		IServiceCollection services = new ServiceCollection()
-		   .AddServices(config);
+		   .AddServices(config)
+		   .AddPgfPlotsServices();
 
 		return services.BuildServiceProvider();
 	}
