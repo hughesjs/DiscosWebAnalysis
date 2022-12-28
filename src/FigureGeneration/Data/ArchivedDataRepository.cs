@@ -1,22 +1,17 @@
 using System.Text.Json;
-using System.Text.Json.Serialization;
 using DiscosWebSdk.Models.ResponseModels.DiscosObjects;
-using FigureGeneration.Options;
-using Microsoft.Extensions.Options;
 
 namespace FigureGeneration.Data;
 
 
 public class ArchivedDataRepository
 {
-	private readonly IOptions<AppSettings> _appSettings;
 	private readonly DataFileService       _dataFileService;
 
 	public readonly Lazy<Task<DiscosObject[]>> DiscosObjects;
 
-	public ArchivedDataRepository(IOptions<AppSettings> appSettings, DataFileService dataFileService)
+	public ArchivedDataRepository(DataFileService dataFileService)
 	{
-		_appSettings     = appSettings;
 		_dataFileService = dataFileService;
 
 		DiscosObjects = new(GetDiscosObjects, LazyThreadSafetyMode.ExecutionAndPublication);
@@ -34,7 +29,7 @@ public class ArchivedDataRepository
 			throw new("Deserialisation of DiscosObjects failed");
 		}
 
-		return discosObjects;
+		return discosObjects.OrderBy(s => s.SatNo).ToArray();
 	}
 
 }
