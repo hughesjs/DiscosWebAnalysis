@@ -1,6 +1,4 @@
-using DiscosWebSdk.Models.ResponseModels.DiscosObjects;
-
-namespace FigureGeneration.Services;
+namespace FigureGeneration.PlotGeneration;
 
 public interface IPlotGenerator
 {

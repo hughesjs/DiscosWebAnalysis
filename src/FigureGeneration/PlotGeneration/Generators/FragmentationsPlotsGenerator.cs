@@ -1,3 +1,4 @@
+using FigureGeneration.PlotGeneration;
 using JetBrains.Annotations;
 
 namespace FigureGeneration.Services.Generators;
