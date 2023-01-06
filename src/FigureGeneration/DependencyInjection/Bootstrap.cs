@@ -1,3 +1,4 @@
+using DiscosWebSdk.DependencyInjection;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using PgfPlots.Net.Public.DependencyInjection;
@@ -16,6 +17,7 @@ public static class Bootstrap
 
 		IServiceCollection services = new ServiceCollection()
 		   .AddServices(config)
+		   .AddDiscosServices(config)
 		   .AddPgfPlotsServices();
 
 		return services.BuildServiceProvider();
