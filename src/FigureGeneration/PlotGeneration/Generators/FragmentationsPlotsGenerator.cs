@@ -5,5 +5,5 @@ namespace FigureGeneration.Services.Generators;
 [UsedImplicitly]
 public class FragmentationsPlotsGenerator: IPlotGenerator
 {
-	public async Task Generate() => Console.WriteLine(nameof(FragmentationsPlotsGenerator));
+	public void Generate() => Console.WriteLine(nameof(FragmentationsPlotsGenerator));
 }

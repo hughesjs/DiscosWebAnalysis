@@ -19,6 +19,7 @@
         <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="7.0.0" />
         <PackageReference Include="Microsoft.Extensions.Options" Version="7.0.0" />
         <PackageReference Include="PgfPlots.Net" Version="0.1.3" />
+        <PackageReference Include="SpaceTrackSdk" Version="1.1.0" />
     </ItemGroup>
     
     <ItemGroup>

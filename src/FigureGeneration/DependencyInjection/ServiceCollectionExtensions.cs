@@ -15,8 +15,8 @@ public static class ServiceCollectionExtensions
 		services.AddDiscosServices(configurationRoot);
 		
 		services.RegisterImplementationsOf<IPlotGenerator>(new[] {typeof(Program).Assembly});
-		services.AddSingleton<PlotGeneratorService>();
 		services.AddSingleton<ArchivedDataRepository>();
+		services.AddSingleton<FigureGenerationApplication>();
 		services.AddTransient<DataFileService>();
 
 		services.Configure<AppSettings>(configurationRoot.GetSection(nameof(AppSettings)));
