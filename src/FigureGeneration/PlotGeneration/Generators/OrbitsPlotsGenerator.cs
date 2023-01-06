@@ -5,5 +5,5 @@ namespace FigureGeneration.Services.Generators;
 [UsedImplicitly]
 public class OrbitsPlotsGenerator: IPlotGenerator
 {
-	public async Task Generate() => Console.WriteLine(nameof(OrbitsPlotsGenerator));
+	public void Generate() => Console.WriteLine(nameof(OrbitsPlotsGenerator));
 }

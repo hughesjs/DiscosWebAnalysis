@@ -6,5 +6,5 @@ namespace FigureGeneration.Services.Generators;
 public class DebrisPlotsGenerator: IPlotGenerator
 {
 
-	public async Task Generate() => Console.WriteLine(nameof(DebrisPlotsGenerator));
+	public void Generate() => Console.WriteLine(nameof(DebrisPlotsGenerator));
 }

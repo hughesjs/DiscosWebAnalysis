@@ -27,17 +27,13 @@ public class SatellitesPlotsGenerator : IPlotGenerator
 		_sourceGenerator = sourceGenerator;
 	}
 
-	public async Task Generate()
+	public void Generate()
 	{
-		DiscosObject[]                   discosObjects = await _dataRepository.DiscosObjects.Value;
+		DiscosObject[]                   discosObjects = _dataRepository.DiscosObjects.Value;
 		DiscosObject[]                   satellites    = GetSatellitesFromDiscosObjects(discosObjects);
 		ReadOnlyCollection<DiscosObject> roSatellites  = new(satellites);
 
-		Task[] generationTasks = {
-									 GenerateSatellitesInOrbitOverTime(roSatellites),
-								 };
-		
-		await Task.WhenAll(generationTasks);
+		GenerateSatellitesInOrbitOverTime(roSatellites);
 	}
 
 	private async Task GenerateSatellitesInOrbitOverTime(ReadOnlyCollection<DiscosObject> roSatellites)
@@ -45,8 +41,7 @@ public class SatellitesPlotsGenerator : IPlotGenerator
 		Dictionary<int, List<DiscosObject>> satellitesByYear = GetSatellitesInOrbitEachYear(roSatellites);
 		Dictionary<int, int> numSatellitesByYear = satellitesByYear.ToDictionary(kvp => kvp.Key, kvp => kvp.Value.Count);
 
-		Cartesian2<int>[] coordinates = numSatellitesByYear.Select(kvp => new Cartesian2<int>(kvp.Key, kvp.Value))
-			.OrderBy(c => c.X).ToArray();
+		Cartesian2<int>[] coordinates = numSatellitesByYear.Select(kvp => new Cartesian2<int>(kvp.Key, kvp.Value)).OrderBy(c => c.X).ToArray();
 
 		int earliestYear = numSatellitesByYear.Keys.Min();
 		int latestYear = numSatellitesByYear.Keys.Max();

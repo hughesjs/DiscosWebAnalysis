@@ -3,12 +3,11 @@ using DiscosWebSdk.Models.ResponseModels.DiscosObjects;
 
 namespace FigureGeneration.Data;
 
-
 public class ArchivedDataRepository
 {
-	private readonly DataFileService       _dataFileService;
+	private readonly DataFileService _dataFileService;
 
-	public readonly Lazy<Task<DiscosObject[]>> DiscosObjects;
+	public readonly Lazy<DiscosObject[]> DiscosObjects;
 
 	public ArchivedDataRepository(DataFileService dataFileService)
 	{
@@ -18,11 +17,11 @@ public class ArchivedDataRepository
 	}
 
 
-	private async Task<DiscosObject[]> GetDiscosObjects()
+	private DiscosObject[] GetDiscosObjects()
 	{
-		string                 filePath      = _dataFileService.GetDataFilePath<DiscosObject>();
-		await using FileStream fStream       = new(filePath, FileMode.Open);
-		DiscosObject[]?         discosObjects = await JsonSerializer.DeserializeAsync<DiscosObject[]>(fStream);
+		string filePath = _dataFileService.GetDataFilePath<DiscosObject>();
+		using FileStream fStream = new(filePath, FileMode.Open);
+		DiscosObject[]? discosObjects = JsonSerializer.Deserialize<DiscosObject[]>(fStream);
 
 		if (discosObjects is null)
 		{
@@ -31,6 +30,4 @@ public class ArchivedDataRepository
 
 		return discosObjects.OrderBy(s => s.SatNo).ToArray();
 	}
-
 }
-

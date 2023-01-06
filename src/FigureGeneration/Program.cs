@@ -1,8 +1,8 @@
-﻿using FigureGeneration.DependencyInjection;
-using FigureGeneration.Services;
+﻿using FigureGeneration;
+using FigureGeneration.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection;
 
 ServiceProvider serviceProvider = Bootstrap.Up();
-PlotGeneratorService pgService = serviceProvider.GetRequiredService<PlotGeneratorService>();
+FigureGenerationApplication app = serviceProvider.GetRequiredService<FigureGenerationApplication>();
 
-await pgService.GenerateAllPlots();
+app.Run();
